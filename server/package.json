@@ -1,0 +1,27 @@
+{
+  "name": "cotejo-notarial-server",
+  "version": "2.0.0",
+  "description": "AML/KYC screening backend (OFAC SDN + SAT 69-B) for notary due-diligence checks",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "build:web": "node scripts/buildWeb.js",
+    "migrate": "knex migrate:latest",
+    "migrate:rollback": "knex migrate:rollback",
+    "seed": "knex seed:run",
+    "sync:ofac": "node src/scripts/syncOfac.js",
+    "sync:sat": "node src/scripts/syncSat.js",
+    "create:usuario": "node src/scripts/createUsuario.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "csv-parse": "^5.5.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "iconv-lite": "^0.6.3",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.1.0",
+    "pg": "^8.12.0"
+  }
+}

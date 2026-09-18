@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="web_dashboard" name="shell-type"/>
+  <title>Cotejo - Panel Principal Notarial</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <style>
+    @layer base { 
+      html, body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; } 
+      body { overscroll-behavior: none; } 
+      main > :first-child { margin-top: 0 !important; } 
+      main > :last-child { margin-bottom: 0 !important; } 
+    } 
+    ::-webkit-scrollbar { display: none; }
+    .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
+  </style>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            slate: {
+              850: '#172033',
+              900: '#0f172a',
+              950: '#0b1120'
+            },
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          borderRadius: {
+            'xl': '0.75rem',
+            '2xl': '1rem',
+            '3xl': '1.5rem'
+          },
+          boxShadow: {
+            'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.05), 0 10px 20px -2px rgba(0, 0, 0, 0.02)',
+            'card': '0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.03)',
+            'card-hover': '0 12px 24px -4px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.03)',
+            'glow': '0 0 25px -5px rgba(79, 70, 229, 0.35)'
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-[#f8fafc] text-slate-800 antialiased selection:bg-indigo-500 selection:text-white">
+  <!-- Sidebar Navigation -->
+  <aside class="fixed left-0 top-0 h-full w-64 bg-slate-900 text-slate-200 z-50 flex flex-col justify-between border-r border-slate-800/80 shadow-xl">
+    <div class="flex flex-col">
+      <!-- Brand Logo -->
+      <div class="px-6 pt-7 pb-6 flex flex-col gap-1 border-b border-slate-800/60">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-indigo-600/30 ring-1 ring-white/20">
+            <span class="material-symbols-outlined text-white text-[20px]">gavel</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-display font-extrabold text-xl tracking-tight text-white uppercase">Cotejo</span>
+            <span class="text-[10px] font-semibold text-indigo-400 tracking-wider uppercase -mt-0.5">SaaS Compliance</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-1.5 pt-3">
+          <span class="text-[11px] font-medium text-slate-400">Notaría Pública No. 142</span>
+          <span class="w-1 h-1 rounded-full bg-slate-600"></span>
+          <span class="text-[11px] font-medium text-slate-400">CDMX</span>
+        </div>
+      </div>
+      <!-- Nav Items -->
+      <nav class="flex flex-col gap-1.5 px-3.5 pt-5">
+        <a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-indigo-600 text-white font-semibold shadow-md shadow-indigo-600/30 transition-all duration-200" href="#">
+          <span class="material-symbols-outlined text-[20px]">dashboard</span>
+          <span class="text-sm">Panel Principal</span>
+        </a>
+        <a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/70 transition-all duration-200 group" href="#">
+          <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-indigo-400 transition-colors">person_search</span>
+          <span class="text-sm font-medium">Nueva Búsqueda</span>
+        </a>
+        <a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/70 transition-all duration-200 group" href="#">
+          <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-indigo-400 transition-colors">menu_book</span>
+          <span class="text-sm font-medium">Bitácora Notarial</span>
+        </a>
+        <a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/70 transition-all duration-200 group" href="#">
+          <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-indigo-400 transition-colors">credit_card</span>
+          <span class="text-sm font-medium">Planes y Suscripción</span>
+        </a>
+      </nav>
+    </div>
+    <!-- User Account Card -->
+    <div class="p-3 m-3.5 rounded-2xl bg-slate-850/80 border border-slate-750/70 backdrop-blur-sm">
+      <div class="flex items-center gap-3 mb-3 p-1">
+        <div class="relative w-9 h-9 rounded-xl bg-gradient-to-tr from-slate-700 to-slate-600 flex items-center justify-center text-white ring-1 ring-white/10 shadow-inner">
+          <span class="material-symbols-outlined text-[20px]">person</span>
+          <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-slate-850"></span>
+        </div>
+        <div class="flex flex-col min-w-0 flex-1">
+          <span class="text-xs font-semibold text-slate-100 truncate">Lic. Fernando Morales</span>
+          <span class="text-[11px] text-emerald-400 font-medium truncate">Notario Titular</span>
+        </div>
+      </div>
+      <a class="flex items-center justify-center gap-1.5 w-full py-2 px-3 rounded-xl bg-slate-800/80 hover:bg-rose-500/10 hover:text-rose-400 hover:border-rose-500/20 text-slate-400 border border-slate-700/50 transition-all text-xs font-medium" href="#">
+        <span class="material-symbols-outlined text-[15px]">logout</span>
+        <span>Cerrar Sesión</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Wrapper -->
+  <div class="pl-64">
+    <!-- Top Bar -->
+    <header class="fixed top-0 left-64 right-0 h-16 bg-white/85 backdrop-blur-md z-40 flex items-center justify-between px-8 border-b border-slate-200/80">
+      <div class="flex items-center gap-6">
+        <div class="flex items-center gap-2 text-slate-500">
+          <span class="material-symbols-outlined text-[17px] text-indigo-600">calendar_today</span>
+          <span class="font-mono text-xs font-medium text-slate-600">Fecha Oficial: 24 May 2024</span>
+        </div>
+        <div class="hidden xl:flex items-center gap-2.5 bg-slate-50 border border-slate-200/70 px-3.5 py-1.5 rounded-full">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <span class="text-xs font-medium text-slate-600">Sincronización Activa:</span>
+          <span class="text-xs font-semibold text-slate-900 font-mono">SAT 69-B, OFAC, ONU</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <a class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-sm shadow-indigo-600/25 transition-all duration-200 hover:shadow-md" href="#">
+          <span class="material-symbols-outlined text-[17px]">add</span>
+          <span>Nueva Consulta</span>
+        </a>
+        <div class="w-8 h-8 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700">
+          <span class="material-symbols-outlined text-[18px]">notifications</span>
+        </div>
+        <div class="w-8 h-8 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
+          <span class="material-symbols-outlined text-[18px]">person</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <main class="relative pt-20 bg-[#f8fafc] w-full px-8 pb-12 min-h-screen">
+      <div class="flex flex-col w-full max-w-7xl mx-auto space-y-7">
+        <!-- Top Greeting & Contextual Metadata -->
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 pt-4">
+          <div class="flex flex-col gap-1.5">
+            <div class="flex items-center gap-2 text-xs font-medium">
+              <span class="font-mono uppercase tracking-wider text-indigo-600 font-semibold bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-100/80">Expediente Matriz LFPIORPI</span>
+              <span class="text-slate-300">•</span>
+              <span class="font-mono text-slate-500">Folio Notarial Activo: 2024-Q4</span>
+            </div>
+            <h1 class="font-display text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Bienvenido, Lic. Morales <span class="text-slate-500 font-normal text-xl lg:text-2xl">• Notaría Pública No. 142 de la CDMX</span>
+            </h1>
+            <p class="text-sm text-slate-500 max-w-3xl leading-relaxed">
+              Plataforma institucional de debida diligencia, cotejo preventivo y certificación registral en prevención de lavado de dinero.
+            </p>
+          </div>
+          <div class="flex items-center gap-3 self-start lg:self-end shrink-0">
+            <div class="flex items-center gap-3 bg-white px-4 py-2.5 rounded-2xl border border-slate-200/70 shadow-card">
+              <span class="relative flex h-2.5 w-2.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              </span>
+              <div class="flex flex-col">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-900">Listas Oficiales Sincronizadas</span>
+                <span class="font-mono text-[11px] text-slate-500">Hoy 06:00 hrs (Corte DOF / OFAC)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero CTA Banner: Compliance Screening -->
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-slate-850 to-indigo-950 text-white p-7 lg:p-9 shadow-xl border border-slate-800">
+          <div class="absolute -right-16 -top-16 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="absolute right-1/3 -bottom-16 w-60 h-60 bg-blue-500/10 rounded-full blur-2xl pointer-events-none"></div>
+          <div class="relative z-10 flex flex-col xl:flex-row items-start xl:items-center justify-between gap-6">
+            <div class="flex items-start gap-4 max-w-3xl">
+              <div class="w-12 h-12 rounded-2xl bg-indigo-500/20 border border-indigo-400/30 backdrop-blur-sm flex items-center justify-center text-indigo-400 shrink-0 shadow-lg shadow-indigo-900/40">
+                <span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="text-[11px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider">Protocolo Pre-Firma</span>
+                  <span class="font-mono text-xs text-slate-400">Art. 18 Fracc. IV LFPIORPI</span>
+                </div>
+                <h2 class="font-display text-xl lg:text-2xl font-bold text-white tracking-tight">
+                  Validación Preventiva de Comparecientes
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl">
+                  Cotejo en tiempo real contra listas vinculantes OFAC (SDN List), Consejo de Seguridad ONU (CSNU), SAT 69-B (EFOS definitivos y desvirtuados) y catálogo PEP México previo al otorgamiento y firma de escrituras públicas.
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 w-full xl:w-auto shrink-0">
+              <a class="group flex items-center justify-center gap-3 w-full xl:w-auto bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white transition-all duration-200 px-6 py-4 rounded-xl shadow-lg shadow-indigo-600/35 hover:shadow-indigo-600/50 hover:scale-[1.01] active:scale-[0.99] border border-white/20" href="#">
+                <div class="flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">person_search</span>
+                  <span class="material-symbols-outlined text-[17px]">security</span>
+                </div>
+                <span class="font-display font-bold text-sm tracking-tight">Iniciar Nueva Búsqueda de Cumplimiento</span>
+                <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row of 4 Compliance KPIs Metrics -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+          <!-- Card 1 -->
+          <div class="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-card hover:shadow-card-hover transition-all duration-200 flex flex-col justify-between group">
+            <div class="flex items-center justify-between pb-3">
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Búsquedas Realizadas Hoy</span>
+              <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center border border-indigo-100 group-hover:scale-105 transition-transform">
+                <span class="material-symbols-outlined text-[20px]">query_stats</span>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-2 pt-1">
+              <span class="font-display text-3xl font-extrabold text-slate-900 tracking-tight">18</span>
+              <span class="font-mono text-xs text-slate-500 font-medium">consultas</span>
+            </div>
+            <div class="flex items-center gap-1.5 pt-3 border-t border-slate-100 mt-3">
+              <span class="material-symbols-outlined text-[16px] text-emerald-600 font-bold">trending_up</span>
+              <span class="font-mono text-xs text-emerald-600 font-bold">+12%</span>
+              <span class="text-xs text-slate-500">respecto a la jornada anterior</span>
+            </div>
+          </div>
+          <!-- Card 2 -->
+          <div class="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-card hover:shadow-card-hover transition-all duration-200 flex flex-col justify-between group">
+            <div class="flex items-center justify-between pb-3">
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Acumulado del Mes</span>
+              <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100 group-hover:scale-105 transition-transform">
+                <span class="material-symbols-outlined text-[20px]">folder_shared</span>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-2 pt-1">
+              <span class="font-display text-3xl font-extrabold text-slate-900 tracking-tight">342</span>
+              <span class="font-mono text-xs text-slate-500 font-medium">cotejos notariales</span>
+            </div>
+            <div class="flex items-center gap-1.5 pt-3 border-t border-slate-100 mt-3">
+              <span class="text-xs text-slate-500">Promedio: <span class="font-semibold text-slate-700">14.2 actos/día laboral</span></span>
+            </div>
+          </div>
+          <!-- Card 3 -->
+          <div class="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-card hover:shadow-card-hover transition-all duration-200 flex flex-col justify-between group">
+            <div class="flex items-center justify-between pb-3">
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Alertas de Coincidencia (Mes)</span>
+              <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-100 group-hover:scale-105 transition-transform">
+                <span class="material-symbols-outlined text-[20px]">notification_important</span>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-2 pt-1">
+              <span class="font-display text-3xl font-extrabold text-amber-600 tracking-tight">2</span>
+              <span class="font-mono text-xs text-amber-700 font-medium">casos bajo análisis</span>
+            </div>
+            <div class="flex items-center gap-1.5 pt-3 border-t border-slate-100 mt-3">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+              <span class="text-xs text-amber-800 font-medium">100% homonimias descartadas</span>
+            </div>
+          </div>
+          <!-- Card 4 -->
+          <div class="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-card hover:shadow-card-hover transition-all duration-200 flex flex-col justify-between group">
+            <div class="flex items-center justify-between pb-3">
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Certificados PDF Generados</span>
+              <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100 group-hover:scale-105 transition-transform">
+                <span class="material-symbols-outlined text-[20px]">workspace_premium</span>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-2 pt-1">
+              <span class="font-display text-3xl font-extrabold text-slate-900 tracking-tight">340</span>
+              <span class="font-mono text-xs text-slate-500 font-medium">constancias con sello</span>
+            </div>
+            <div class="flex items-center gap-1.5 pt-3 border-t border-slate-100 mt-3">
+              <span class="material-symbols-outlined text-[15px] text-emerald-600">verified</span>
+              <span class="text-xs text-slate-500">Archivados en apéndice notarial</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-7 items-start">
+          <!-- Left Column: Recent Searches Table -->
+          <div class="lg:col-span-8 xl:col-span-9 flex flex-col gap-6">
+            <div class="bg-white rounded-2xl border border-slate-200/70 shadow-card overflow-hidden">
+              <!-- Table Header -->
+              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-6 gap-4 border-b border-slate-100 bg-slate-50/50">
+                <div class="flex flex-col gap-1">
+                  <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-indigo-600 text-[20px]">assignment</span>
+                    <h2 class="font-display font-bold text-base text-slate-900 tracking-tight">
+                      Últimas Búsquedas Notariales (Expedientes Recientes)
+                    </h2>
+                  </div>
+                  <p class="text-xs text-slate-500">
+                    Registro estricto de certificaciones con folio de consulta, hash criptográfico y estatus de semáforo.
+                  </p>
+                </div>
+                <div class="flex items-center gap-2.5 w-full sm:w-auto">
+                  <div class="relative w-full sm:w-64">
+                    <span class="material-symbols-outlined absolute left-3 top-2.5 text-[18px] text-slate-400">search</span>
+                    <input class="w-full bg-white pl-9 pr-3.5 py-2 rounded-xl text-xs text-slate-800 placeholder:text-slate-400 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 shadow-sm" placeholder="Filtrar por folio, persona o escritura..." type="text"/>
+                  </div>
+                  <button class="flex items-center gap-1.5 bg-white border border-slate-200 px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-colors shrink-0 shadow-sm">
+                    <span class="material-symbols-outlined text-[16px] text-slate-500">tune</span>
+                    <span>Filtros</span>
+                  </button>
+                </div>
+              </div>
+              <!-- Refined Data Table -->
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr class="bg-slate-50/80 text-slate-500 text-[11px] font-bold uppercase tracking-wider border-b border-slate-100">
+                      <th class="py-3.5 px-6">Folio Cotejo</th>
+                      <th class="py-3.5 px-4">Fecha y Hora</th>
+                      <th class="py-3.5 px-4">Compareciente o Razón Social</th>
+                      <th class="py-3.5 px-4">Instrumento / Acto</th>
+                      <th class="py-3.5 px-3">Tipo</th>
+                      <th class="py-3.5 px-4">Resultado Semáforo</th>
+                      <th class="py-3.5 px-6 text-right">Acción Notarial</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100 text-xs text-slate-700">
+                    <!-- Row 1 -->
+                    <tr class="hover:bg-slate-50/70 transition-colors group">
+                      <td class="py-4 px-6">
+                        <span class="font-mono text-xs text-indigo-600 font-bold bg-indigo-50/70 px-2 py-1 rounded-md border border-indigo-100">#CT-2024-0891</span>
+                      </td>
+                      <td class="py-4 px-4">
+                        <div class="flex flex-col">
+                          <span class="font-medium text-slate-900">14/10/2024</span>
+                          <span class="font-mono text-[11px] text-slate-400">11:42 hrs</span>
+                        </div>
+                      </td>
+                      <td class="py-4 px-4">
+                        <div class="flex flex-col">
+                          <span class="font-semibold text-slate-900 group-hover:text-indigo-600 transition-colors">Grupo Inmobiliario del Valle S.A. de C.V.</span>
+                          <span class="font-mono text-[11px] text-slate-500">RFC: GIV160412AA3</span>
+                        </div>
+                      </td>
+                      <td class="py-4 px-4">
+                        <div class="flex flex-col">
+                          <span class="font-semibold text-slate-900">Esc. 45,210</span>
+                          <span class="text-[11px] text-slate-500">Compraventa Inmueble</span>
+                        </div>
+                      </td>
+                      <td class="py-4 px-3">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 uppercase tracking-wide">Moral</span>
+                      </td>
+                      <td class="py-4 px-4">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/60 font-semibold text-[11px]">
+                          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                          <span>Sin coincidencia</span>
+                          <span class="font-mono text-[10px] text-emerald-600 font-normal">(0%)</span>
+                        </span>
+                      </td>
+                      <td class="py-4 px-6 text-right">
+                        <div class="flex items-center justify-end gap-1.5">
+                          <button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-indigo-600 hover:text-white text-slate-700 transition-all text-xs font-semibold" title="Ver Ficha y Certificado PDF">
+                            <span class="material-symbols-outlined text-[15px]">picture_as_pdf</span>
+                            <span class="hidden xl:inline">Ficha PDF</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <!-- Row 2 -->
+                    <tr class="hover:bg-amber-50/40 bg-amber-50/15 transition-colors group">
+                      <td class="py-4 px-6">
+                        <span class="font-mono text-xs text-indigo-600 font-bold bg-indigo-50/70 px-2 py-1 rounded-md border border-indigo-100">#CT-2024-0890</span>
+                      </td>
+                      <td class="py-4 px-4">
+                        <div class="flex flex-col">
+                          <span class="font-medium text-slate-900">14/10/2024</span>
+                          <span class="font-mono text-[11px] text-slate-400">10:15 hrs</span>
+                        </div>
+                      </td>
+                      <td class="py-4 px-4">
+                        <div class="flex flex-col">
+                          <span class="font-semibold text-slate-900 group-hover:text-amber-700 transition-colors">Roberto Garza Elizondo</span>
+                          <span class="font-mono text-[11px] text-slate-500">CURP: GAER780211HNL...</span>
+                        </div>
+                      </td>
+                      <td class="py-4 px-4">
+                        <div class="flex flex-col">
+                          <span class="font-semibold text-slate-900">Esc. 45,208</span>
+                          <span class="text-[11px] text-slate-500">Poder Notarial Irrevocable</span>
+                        </div>
+                      </td>
+                      <td class="py-4 px-3">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 uppercase tracking-wide">Física</span>
+                      </td>
+                      <td class="py-4 px-4">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200/80 font-semibold text-[11px]">
+                          <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                          <span>Coincidencia parcial</span>
+                          <span class="font-mono text-[10px] text-amber-700 font-normal">(74% homonimia)</span>
+                        </span>
+                      </td>
+                      <td class="py-4 px-6 text-right">
+                        <div class="flex items-center justify-end gap-1.5">
+                          <button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white transition-all text-xs font-semibold shadow-sm shadow-amber-600/20">
+                            <span class="material-symbols-outlined text-[15px]">troubleshoot</span>
+                            <span>Revisar Coincidencia</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <!-- Row 3 -->
+                    <tr class="hover:bg-slate-50/70 transition-colors group">
+                      <td class="py-4 px-6">
+                        <span class="font-mono text-xs text-indigo-600 font-bold bg-indigo-50/70 px-2 py-1 rounded-md border border-indigo-100">#CT-2024-0889</span>
+                      </td>
+                      <td class="py-4 px-4">
+                        <div class="flex flex-col">
+                          <span class="font-medium text-slate-900">14/10/2024</span>
+                          <span class="font-mono text-[11px] text-slate-400">09:30 hrs</span>
+                        </div>
+                      </td>
+                      <td class="py-4 px-4">
+                        <div class="flex flex-col">
+                          <span class="font-semibold text-slate-900 group-hover:text-indigo-600 transition-colors">María Elena Fuentes Cárdenas</span>
+                          <span class="font-mono text-[11px] text-slate-500">CURP: FUCM820904MDF...</span>
+                        </div>
+                      </td>
+                      <td class="py-4 px-4">
+                        <div class="flex flex-col">
+                          <span class="font-semibold text-slate-900">Esc. 45,206</span>
+                          <span class="text-[11px] text-slate-500">Donación Pura y Simple</span>
+                        </div>
+                      </td>
+                      <td class="py-4 px-3">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 uppercase tracking-wide">Física</span>
+                      </td>
+                      <td class="py-4 px-4">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/60 font-semibold text-[11px]">
+                          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                          <span>Sin coincidencia</span>
+                          <span class="font-mono text-[10px] text-emerald-600 font-normal">(0%)</span>
+                        </span>
+                      </td>
+                      <td class="py-4 px-6 text-right">
+                        <div class="flex items-center justify-end gap-1.5">
+                          <button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-indigo-600 hover:text-white text-slate-700 transition-all text-xs font-semibold">
+                            <span class="material-symbols-outlined text-[15px]">picture_as_pdf</span>
+                            <span class="hidden xl:inline">Ficha PDF</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <!-- Row 4 -->
+                    <tr class="hover:bg-slate-50/70 transition-colors group">
+                      <td class="py-4 px-6">
+                        <span class="font-mono text-xs text-indigo-600 font-bold bg-indigo-50/70 px-2 py-1 rounded-md border border-indigo-100">#CT-2024-0888</span>
+                      </td>
+                      <td class="py-4 px-4">
+                        <div class="flex flex-col">
+                          <span class="font-medium text-slate-900">13/10/2024</span>
+                          <span class="font-mono text-[11px] text-slate-400">18:20 hrs</span>
+                        </div>
+                      </td>
+                      <td class="py-4 px-4">
+                        <div class="flex flex-col">
+                          <span class="font-semibold text-slate-900 group-hover:text-indigo-600 transition-colors">Constructora &amp; Desarrollos del Bajío S.A.</span>
+                          <span class="font-mono text-[11px] text-slate-500">RFC: CDB120304910</span>
+                        </div>
+                      </td>
+                      <td class="py-4 px-4">
+                        <div class="flex flex-col">
+                          <span class="font-semibold text-slate-900">Esc. 45,200</span>
+                          <span class="text-[11px] text-slate-500">Constitución de Sociedad</span>
+                        </div>
+                      </td>
+                      <td class="py-4 px-3">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 uppercase tracking-wide">Moral</span>
+                      </td>
+                      <td class="py-4 px-4">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/60 font-semibold text-[11px]">
+                          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                          <span>Sin coincidencia</span>
+                          <span class="font-mono text-[10px] text-emerald-600 font-normal">(0%)</span>
+                        </span>
+                      </td>
+                      <td class="py-4 px-6 text-right">
+                        <div class="flex items-center justify-end gap-1.5">
+                          <button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all text-xs font-semibold">
+                            <span class="material-symbols-outlined text-[15px]">visibility</span>
+                            <span>Ver detalle</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <!-- Row 5 -->
+                    <tr class="hover:bg-rose-50/40 bg-rose-50/15 transition-colors group">
+                      <td class="py-4 px-6">
+                        <span class="font-mono text-xs text-rose-600 font-bold bg-rose-50 px-2 py-1 rounded-md border border-rose-200/80">#CT-2024-0885</span>
+                      </td>
+                      <td class="py-4 px-4">
+                        <div class="flex flex-col">
+                          <span class="font-medium text-slate-900">13/10/2024</span>
+                          <span class="font-mono text-[11px] text-slate-400">16:05 hrs</span>
+                        </div>
+                      </td>
+                      <td class="py-4 px-4">
+                        <div class="flex flex-col">
+                          <span class="font-semibold text-rose-600">Viktor Petrovich / Importadora Global</span>
+                          <span class="font-mono text-[11px] text-rose-500/90">Pasaporte / Tax ID: RU-9912048</span>
+                        </div>
+                      </td>
+                      <td class="py-4 px-4">
+                        <div class="flex flex-col">
+                          <span class="font-semibold text-slate-900">Esc. 45,198</span>
+                          <span class="text-[11px] text-slate-500">Protocolización de Poder Extranjero</span>
+                        </div>
+                      </td>
+                      <td class="py-4 px-3">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-700 uppercase tracking-wide">Moral/Extr.</span>
+                      </td>
+                      <td class="py-4 px-4">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-100 text-rose-800 border border-rose-200 font-bold text-[11px]">
+                          <span class="w-1.5 h-1.5 rounded-full bg-rose-600 animate-pulse"></span>
+                          <span>Coincidencia exacta - OFAC</span>
+                        </span>
+                      </td>
+                      <td class="py-4 px-6 text-right">
+                        <div class="flex items-center justify-end gap-1.5">
+                          <button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white transition-all text-xs font-semibold shadow-sm shadow-rose-600/20">
+                            <span class="material-symbols-outlined text-[15px]">gavel</span>
+                            <span>Ficha de Alerta</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- Table Footer -->
+              <div class="flex items-center justify-between px-6 py-4 bg-slate-50/60 border-t border-slate-100">
+                <span class="text-xs text-slate-500">
+                  Mostrando <span class="font-semibold text-slate-900">5</span> de <span class="font-semibold text-slate-900">342</span> expedientes notariales registrados este mes
+                </span>
+                <div class="flex items-center gap-1.5">
+                  <button class="p-1.5 rounded-xl bg-white border border-slate-200 text-slate-400 disabled:opacity-50 shadow-sm" disabled>
+                    <span class="material-symbols-outlined text-[17px]">chevron_left</span>
+                  </button>
+                  <span class="text-xs font-semibold px-3 py-1 bg-white border border-slate-200 text-slate-800 rounded-xl shadow-sm">Pág. 1 de 69</span>
+                  <button class="p-1.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 transition-colors shadow-sm">
+                    <span class="material-symbols-outlined text-[17px]">chevron_right</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- Institutional LFPIORPI Compliance Note -->
+            <div class="flex items-start gap-4 p-5 rounded-2xl bg-white border border-slate-200/70 shadow-card text-slate-600">
+              <div class="w-9 h-9 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0 mt-0.5">
+                <span class="material-symbols-outlined text-[20px]">policy</span>
+              </div>
+              <div class="flex flex-col gap-1">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-900">Aviso de Responsabilidad Notarial</span>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                  De conformidad con la Ley Federal para la Prevención e Identificación de Operaciones con Recursos de Procedencia Ilícita (LFPIORPI) y las Reglas de Carácter General aplicables a la fe pública, los certificados generados integran sellos digitales y folio de consulta inmutable para acreditar la debida diligencia previa ante requerimientos de la Unidad de Inteligencia Financiera (UIF).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Official Sources Status & Auxiliary Panel -->
+          <div class="lg:col-span-4 xl:col-span-3 flex flex-col gap-6">
+            <!-- Official Sources Live Status Card -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-card flex flex-col gap-5">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-indigo-600 text-[20px]">sync</span>
+                  <h3 class="font-display font-bold text-sm text-slate-900 tracking-tight">
+                    Estado de Fuentes Oficiales
+                  </h3>
+                </div>
+                <span class="relative flex h-2.5 w-2.5">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 leading-relaxed -mt-2">
+                Conexión algorítmica y repositorios de listas negras sincronizados con fedatarios públicos.
+              </p>
+              <!-- Sources List -->
+              <div class="flex flex-col divide-y divide-slate-100">
+                <!-- Source 1: OFAC -->
+                <div class="flex items-start gap-3 py-3.5 first:pt-0">
+                  <div class="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-slate-700 shrink-0 mt-0.5">
+                    <span class="material-symbols-outlined text-[17px]">flag</span>
+                  </div>
+                  <div class="flex flex-col min-w-0 flex-1">
+                    <div class="flex items-center justify-between gap-1">
+                      <span class="text-xs font-semibold text-slate-900 truncate">Lista OFAC (SDN)</span>
+                      <span class="font-mono text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">Al día</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500">Dept. del Tesoro EE.UU.</span>
+                    <span class="font-mono text-[10px] text-slate-400 pt-0.5">Actualizada hoy 05:30 hrs</span>
+                  </div>
+                </div>
+                <!-- Source 2: UN Security Council -->
+                <div class="flex items-start gap-3 py-3.5">
+                  <div class="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-slate-700 shrink-0 mt-0.5">
+                    <span class="material-symbols-outlined text-[17px]">public</span>
+                  </div>
+                  <div class="flex flex-col min-w-0 flex-1">
+                    <div class="flex items-center justify-between gap-1">
+                      <span class="text-xs font-semibold text-slate-900 truncate">Consejo Seg. ONU</span>
+                      <span class="font-mono text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">Al día</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500">Resoluciones vinculantes</span>
+                    <span class="font-mono text-[10px] text-slate-400 pt-0.5">Actualizada hoy 05:45 hrs</span>
+                  </div>
+                </div>
+                <!-- Source 3: SAT 69-B -->
+                <div class="flex items-start gap-3 py-3.5">
+                  <div class="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-slate-700 shrink-0 mt-0.5">
+                    <span class="material-symbols-outlined text-[17px]">account_balance</span>
+                  </div>
+                  <div class="flex flex-col min-w-0 flex-1">
+                    <div class="flex items-center justify-between gap-1">
+                      <span class="text-xs font-semibold text-slate-900 truncate">SAT Art. 69-B (EFOS)</span>
+                      <span class="font-mono text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">DOF Sinc</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500">Definitivos y presuntos</span>
+                    <span class="font-mono text-[10px] text-slate-400 pt-0.5">Última pub. DOF: 24 May 2024</span>
+                  </div>
+                </div>
+                <!-- Source 4: PEP México -->
+                <div class="flex items-start gap-3 py-3.5 last:pb-0">
+                  <div class="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-slate-700 shrink-0 mt-0.5">
+                    <span class="material-symbols-outlined text-[17px]">badge</span>
+                  </div>
+                  <div class="flex flex-col min-w-0 flex-1">
+                    <div class="flex items-center justify-between gap-1">
+                      <span class="text-xs font-semibold text-slate-900 truncate">PEP México</span>
+                      <span class="font-mono text-[10px] font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-full">Monitoreo</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500">Servidores públicos y asociados</span>
+                    <span class="font-mono text-[10px] text-slate-400 pt-0.5">Base activa nacional (3 niveles)</span>
+                  </div>
+                </div>
+              </div>
+              <div class="pt-1">
+                <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200/70">
+                  <div class="flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px] text-emerald-600">verified</span>
+                    <span class="text-xs font-medium text-slate-700">Integridad de Hash SHA-256</span>
+                  </div>
+                  <span class="font-mono text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">VÁLIDA</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Document Certifier Widget -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-card flex flex-col gap-4">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-indigo-600 text-[20px]">batch_prediction</span>
+                <h3 class="font-display font-bold text-sm text-slate-900 tracking-tight">
+                  Cotejo Rápido por Lote
+                </h3>
+              </div>
+              <p class="text-xs text-slate-500 leading-relaxed -mt-1">
+                Cargue lista en formato Excel/CSV con comparecientes de escrituras complejas o créditos hipotecarios.
+              </p>
+              <div class="p-6 bg-slate-50/80 rounded-2xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center text-center gap-2 cursor-pointer hover:bg-indigo-50/40 hover:border-indigo-300 transition-all group">
+                <div class="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 group-hover:text-indigo-600 group-hover:scale-105 transition-all shadow-sm">
+                  <span class="material-symbols-outlined text-[22px]">upload_file</span>
+                </div>
+                <span class="text-xs font-semibold text-slate-900 group-hover:text-indigo-600 transition-colors">Arrastre archivo .CSV o .XLSX</span>
+                <span class="font-mono text-[11px] text-slate-400">Hasta 200 personas por emisión</span>
+              </div>
+              <button class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white transition-all text-xs font-semibold shadow-sm hover:shadow-md">
+                <span class="material-symbols-outlined text-[17px]">file_upload</span>
+                <span>Procesar Padrón Notarial</span>
+              </button>
+            </div>
+
+            <!-- Official Notarial Circular Banner -->
+            <div class="p-5 rounded-2xl bg-gradient-to-br from-slate-50 to-indigo-50/50 border border-indigo-100/70 text-slate-800 flex flex-col gap-1.5 shadow-card">
+              <div class="flex items-center gap-1.5 text-indigo-600">
+                <span class="material-symbols-outlined text-[16px]">campaign</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider">Circular Colegio de Notarios</span>
+              </div>
+              <span class="text-xs font-bold text-slate-900">Criterios UIF 2024 / Actividades Vulnerables</span>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Recuerde que en poderes especiales irrevocables sobre derechos reales la verificación de titulares reales es obligatoria.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

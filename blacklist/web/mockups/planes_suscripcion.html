@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="web_dashboard" name="shell-type"/>
+  <title>Cotejo - Planes y Licenciamiento Notarial</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <style>
+    @layer base { 
+      html, body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; } 
+      body { overscroll-behavior: none; } 
+      main > :first-child { margin-top: 0 !important; } 
+      main > :last-child { margin-bottom: 0 !important; } 
+    } 
+    ::-webkit-scrollbar { display: none; }
+    .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
+  </style>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            slate: {
+              850: '#172033',
+              900: '#0f172a',
+              950: '#0b1120'
+            },
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          borderRadius: {
+            'xl': '0.75rem',
+            '2xl': '1rem'
+          },
+          boxShadow: {
+            'card': '0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.03)',
+            'card-hover': '0 12px 24px -4px rgba(15, 23, 42, 0.08)'
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-[#f8fafc] text-slate-800 antialiased selection:bg-indigo-500 selection:text-white">
+  <!-- Sidebar Navigation -->
+  <aside class="fixed left-0 top-0 h-full w-64 bg-slate-900 text-slate-200 z-50 flex flex-col justify-between border-r border-slate-800/80 shadow-xl">
+    <div class="flex flex-col">
+      <!-- Brand Logo -->
+      <div class="px-6 pt-7 pb-6 flex flex-col gap-1 border-b border-slate-800/60">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-indigo-600/30 ring-1 ring-white/20">
+            <span class="material-symbols-outlined text-white text-[20px]">gavel</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-display font-extrabold text-xl tracking-tight text-white uppercase">Cotejo</span>
+            <span class="text-[10px] font-semibold text-indigo-400 tracking-wider uppercase -mt-0.5">SaaS Compliance</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-1.5 pt-3">
+          <span class="text-[11px] font-medium text-slate-400">Notaría Pública No. 142</span>
+          <span class="w-1 h-1 rounded-full bg-slate-600"></span>
+          <span class="text-[11px] font-medium text-slate-400">CDMX</span>
+        </div>
+      </div>
+      <!-- Nav Items -->
+      <nav class="flex flex-col gap-1.5 px-3.5 pt-5">
+        <a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/70 transition-all text-sm font-medium" href="dashboard.html">
+          <span class="material-symbols-outlined text-[20px]">dashboard</span>
+          <span class="text-sm">Panel Principal</span>
+        </a>
+        <a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/70 transition-all text-sm font-medium" href="nueva_busqueda.html">
+          <span class="material-symbols-outlined text-[20px]">person_search</span>
+          <span class="text-sm font-medium">Nueva Búsqueda</span>
+        </a>
+        <a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/70 transition-all text-sm font-medium" href="bitacora_notarial.html">
+          <span class="material-symbols-outlined text-[20px]">menu_book</span>
+          <span class="text-sm">Bitácora Notarial</span>
+        </a>
+        <a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-indigo-600 text-white font-semibold shadow-md shadow-indigo-600/30 transition-all" href="planes_suscripcion.html">
+          <span class="material-symbols-outlined text-[20px]">credit_card</span>
+          <span class="text-sm font-medium">Planes y Suscripción</span>
+        </a>
+      </nav>
+    </div>
+    <!-- User Account Card -->
+    <div class="p-3 m-3.5 rounded-2xl bg-slate-850/80 border border-slate-750/70 backdrop-blur-sm">
+      <div class="flex items-center gap-3 mb-3 p-1">
+        <div class="relative w-9 h-9 rounded-xl bg-gradient-to-tr from-slate-700 to-slate-600 flex items-center justify-center text-white ring-1 ring-white/10 shadow-inner">
+          <span class="material-symbols-outlined text-[20px]">person</span>
+          <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-slate-850"></span>
+        </div>
+        <div class="flex flex-col min-w-0 flex-1">
+          <span class="text-xs font-semibold text-slate-100 truncate">Lic. Fernando Morales</span>
+          <span class="text-[11px] text-emerald-400 font-medium truncate">Notario Titular</span>
+        </div>
+      </div>
+      <a class="flex items-center justify-center gap-1.5 w-full py-2 px-3 rounded-xl bg-slate-800/80 hover:bg-rose-500/10 hover:text-rose-400 text-slate-400 border border-slate-700/50 transition-all text-xs font-medium" href="login.html">
+        <span class="material-symbols-outlined text-[15px]">logout</span>
+        <span>Cerrar Sesión</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Wrapper -->
+  <div class="pl-64">
+    <!-- Top Bar -->
+    <header class="fixed top-0 left-64 right-0 h-16 bg-white/85 backdrop-blur-md z-40 flex items-center justify-between px-8 border-b border-slate-200/80">
+      <div class="flex items-center gap-6">
+        <div class="flex items-center gap-2 text-slate-500">
+          <span class="material-symbols-outlined text-[17px] text-indigo-600">calendar_today</span>
+          <span class="font-mono text-xs font-medium text-slate-600">Fecha Oficial: Hoy, 24 May 2024</span>
+        </div>
+        <div class="hidden xl:flex items-center gap-2.5 bg-slate-50 border border-slate-200/70 px-3.5 py-1.5 rounded-full">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="text-xs font-medium text-slate-600">Sincronización Activa:</span>
+          <span class="text-xs font-semibold text-slate-900 font-mono">SAT 69-B, OFAC, ONU (Al día)</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <a class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-sm shadow-indigo-600/25 transition-all" href="nueva_busqueda.html">
+          <span class="material-symbols-outlined text-[17px]">add</span>
+          <span>Nueva Consulta</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative pt-20 bg-[#f8fafc] w-full px-8 pb-16 min-h-screen">
+      <div class="flex flex-col w-full max-w-7xl mx-auto space-y-7">
+        
+        <!-- Header & Fiscal Guarantee Bar -->
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pt-2">
+          <div class="flex flex-col gap-2 max-w-3xl">
+            <div class="flex items-center gap-2">
+              <span class="font-mono text-xs font-semibold text-indigo-600 uppercase tracking-wider">Módulo Administrativo</span>
+              <span class="text-slate-300">•</span>
+              <span class="font-mono text-xs font-bold text-slate-900">Licenciamiento Notarial Vigente</span>
+            </div>
+            <h1 class="font-display font-extrabold text-2xl lg:text-3xl text-slate-900 tracking-tight">
+              Planes y Licenciamiento Notarial
+            </h1>
+            <p class="text-sm text-slate-500 leading-relaxed">
+              Cumplimiento legal garantizado y blindaje preventivo ante la UIF y la Secretaría de Hacienda bajo lineamientos de la LFPIORPI.
+            </p>
+          </div>
+          <!-- Fiscal Guarantee Pill -->
+          <div class="flex items-center gap-4 bg-white p-4 rounded-2xl border border-slate-200/70 shadow-card self-start lg:self-auto">
+            <div class="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
+              <span class="material-symbols-outlined text-[24px]">receipt_long</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-xs font-bold text-slate-900">Facturación Fiscal CFDI 4.0</span>
+              <span class="text-xs text-slate-500">Mensual o anual deducible para la notaría</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Editorial Statement Banner with Micro Data Spark -->
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-slate-850 to-indigo-950 text-white p-7 shadow-xl border border-slate-800">
+          <div class="absolute -right-8 -top-8 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="flex items-start gap-4 max-w-2xl">
+              <div class="p-3 bg-white/10 rounded-xl text-indigo-300 ring-1 ring-white/10">
+                <span class="material-symbols-outlined text-[24px]">verified_user</span>
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="text-[11px] font-bold uppercase tracking-widest text-indigo-300">Dictamen de Validez Técnica</span>
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                  <span class="font-mono text-xs text-slate-400">NOM-151 • LFPIORPI Art. 17 Fracc. XII</span>
+                </div>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                  Las constancias digitales expedidas por <strong class="text-white font-semibold">Cotejo</strong> incorporan sellado criptográfico inmutable SHA-256, asegurando certeza jurídica ante revisiones ordinarias o extraordinarias de la UIF y autoridades federales.
+                </p>
+              </div>
+            </div>
+            <!-- Quick Metric Anchor -->
+            <div class="flex items-center gap-6 self-end md:self-center bg-slate-800/80 px-6 py-3.5 rounded-xl border border-slate-700/60">
+              <div class="flex flex-col">
+                <span class="font-display text-2xl font-bold text-white">100%</span>
+                <span class="text-[11px] text-indigo-300 font-medium">Trazabilidad en Expediente</span>
+              </div>
+              <div class="w-px h-8 bg-slate-700"></div>
+              <div class="flex flex-col">
+                <span class="font-display text-2xl font-bold text-white">0 min</span>
+                <span class="text-[11px] text-indigo-300 font-medium">Latencia en Listas Oficiales</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pricing Cards Grid: 2 Bespoke Institutional Columns -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-7 items-stretch">
+          
+          <!-- TARJETA 1: PLAN BÁSICO (Vigente / Operación Actual) -->
+          <div class="relative flex flex-col justify-between bg-white rounded-2xl border border-slate-200/70 shadow-card p-8 hover:shadow-card-hover transition-all duration-300">
+            <div class="flex flex-col">
+              <!-- Top Status Indicator -->
+              <div class="flex items-center justify-between gap-2 mb-4">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-800 rounded-full text-xs font-semibold border border-emerald-200">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  Suscripción Notaría Titular
+                </span>
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Licencia Regular</span>
+              </div>
+              <div class="flex items-baseline justify-between mb-2">
+                <h2 class="font-display text-2xl text-slate-900 font-bold">Plan Básico</h2>
+                <span class="text-xs bg-slate-100 px-3 py-1 rounded-full text-slate-600 font-semibold border border-slate-200">
+                  Operación Regular Notarial
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 mb-6">
+                Verificación continua e ilimitada contra las listas regulatorias públicas obligatorias en México.
+              </p>
+              
+              <!-- Pricing Block -->
+              <div class="bg-slate-50 p-5 rounded-xl border border-slate-200/70 mb-6 flex flex-col gap-1">
+                <div class="flex items-baseline gap-2">
+                  <span class="font-display text-3xl font-extrabold text-slate-900 tracking-tight">$3,800</span>
+                  <span class="text-xs font-semibold text-slate-500">MXN / mes</span>
+                </div>
+                <div class="flex items-center justify-between text-slate-500 text-xs">
+                  <span>o <strong>$38,000 MXN</strong> anual (ahorro de 2 meses)</span>
+                  <span class="font-mono text-xs text-slate-700 font-medium">+ IVA con CFDI</span>
+                </div>
+              </div>
+
+              <!-- Feature List -->
+              <div class="flex flex-col gap-3">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                  Capacidades Jurídicas Incluidas
+                </span>
+                <ul class="flex flex-col gap-3 text-xs text-slate-700">
+                  <li class="flex items-start gap-2.5">
+                    <span class="material-symbols-outlined text-emerald-600 text-[18px] shrink-0 mt-0.5">check_circle</span>
+                    <div class="flex flex-col">
+                      <span class="font-semibold text-slate-900">Búsquedas ILIMITADAS contra las 3 listas públicas vinculantes:</span>
+                      <div class="flex flex-col gap-1 mt-1.5 pl-1">
+                        <div class="flex items-center gap-1.5 text-xs text-slate-600">
+                          <span class="material-symbols-outlined text-[15px] text-indigo-600">shield</span>
+                          <span><strong>OFAC (EE.UU.):</strong> Lista SDN de Personas Bloqueadas.</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 text-xs text-slate-600">
+                          <span class="material-symbols-outlined text-[15px] text-indigo-600">public</span>
+                          <span><strong>ONU (CSNU):</strong> Sanciones del Consejo de Seguridad ONU.</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 text-xs text-slate-600">
+                          <span class="material-symbols-outlined text-[15px] text-indigo-600">gavel</span>
+                          <span><strong>SAT Art. 69-B:</strong> EFOS definitivos, presuntos y desvirtuados.</span>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-2.5 pt-1">
+                    <span class="material-symbols-outlined text-emerald-600 text-[18px] shrink-0 mt-0.5">check_circle</span>
+                    <div class="flex flex-col">
+                      <span class="font-semibold text-slate-900">Semáforo de riesgo y cálculo algorítmico de homonimias (pg_trgm).</span>
+                      <span class="text-slate-500">Indexación trigrama adaptada a nombres en español.</span>
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-2.5">
+                    <span class="material-symbols-outlined text-emerald-600 text-[18px] shrink-0 mt-0.5">check_circle</span>
+                    <div class="flex flex-col">
+                      <span class="font-semibold text-slate-900">Descarga de Fichas Notariales en PDF con sello SHA-256.</span>
+                      <span class="text-slate-500">Formato listo para protocolización en apéndice.</span>
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-2.5">
+                    <span class="material-symbols-outlined text-emerald-600 text-[18px] shrink-0 mt-0.5">check_circle</span>
+                    <div class="flex flex-col">
+                      <span class="font-semibold text-slate-900">Hasta 5 usuarios simultáneos autorizados.</span>
+                      <span class="text-slate-500">Credenciales para abogados dictaminadores y Notario.</span>
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-2.5">
+                    <span class="material-symbols-outlined text-emerald-600 text-[18px] shrink-0 mt-0.5">check_circle</span>
+                    <div class="flex flex-col">
+                      <span class="font-semibold text-slate-900">Soporte técnico preferencial por WhatsApp y teléfono.</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Action Area -->
+            <div class="pt-6 mt-6 border-t border-slate-100 flex flex-col gap-3">
+              <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                <div class="flex items-center gap-2 text-slate-700">
+                  <span class="material-symbols-outlined text-emerald-600 text-[18px]">verified</span>
+                  <span class="text-xs font-semibold">Estado en su despacho:</span>
+                </div>
+                <span class="font-mono text-xs font-bold text-indigo-600">NOTARÍA 142 CDMX • ACTIVO</span>
+              </div>
+              <button class="w-full h-11 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl flex items-center justify-center gap-2 shadow-sm transition-all" type="button">
+                <span class="material-symbols-outlined text-[18px]">manage_accounts</span>
+                <span>Gestionar Suscripción Notarial</span>
+              </button>
+              <span class="text-[11px] text-center text-slate-400">Próxima renovación programada: 15 de Noviembre de 2024</span>
+            </div>
+          </div>
+
+          <!-- TARJETA 2: PLAN PRO (Blindaje Notarial Total - Fase 2) -->
+          <div class="relative flex flex-col justify-between bg-white rounded-2xl border border-slate-200/70 shadow-card p-8 hover:shadow-card-hover transition-all duration-300 overflow-hidden">
+            <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-amber-500"></div>
+            <div class="flex flex-col">
+              <!-- Top Status Indicator -->
+              <div class="flex items-center justify-between gap-2 mb-4">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-50 text-indigo-900 rounded-full text-xs font-semibold border border-indigo-200">
+                  <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                  PRÓXIMAMENTE (FASE 2)
+                </span>
+                <span class="font-mono text-xs text-indigo-600 uppercase font-semibold">Q3 2024</span>
+              </div>
+              <div class="flex items-baseline justify-between mb-2">
+                <h2 class="font-display text-2xl text-slate-900 font-bold">Plan Pro</h2>
+                <span class="text-xs bg-indigo-50 px-3 py-1 rounded-full text-indigo-700 font-semibold border border-indigo-100">
+                  Blindaje Notarial Total
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 mb-6">
+                Máxima diligencia jurídica para operaciones inmobiliarias complejas, corporativas y fideicomisos.
+              </p>
+
+              <!-- Pricing Block -->
+              <div class="bg-slate-50 p-5 rounded-xl border border-slate-200/70 mb-6 flex flex-col gap-1">
+                <div class="flex items-baseline gap-2">
+                  <span class="font-display text-3xl font-extrabold text-slate-900 tracking-tight">$6,500</span>
+                  <span class="text-xs font-semibold text-slate-500">MXN / mes</span>
+                  <span class="text-[11px] text-indigo-600 font-medium ml-1">(Referencial preventa)</span>
+                </div>
+                <div class="flex items-center justify-between text-slate-500 text-xs">
+                  <span>Incluye migración de expedientes y configuración de API REST</span>
+                </div>
+              </div>
+
+              <!-- Feature List -->
+              <div class="flex flex-col gap-3">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                  Ampliación Integral de Diligencia
+                </span>
+                <ul class="flex flex-col gap-3 text-xs text-slate-700">
+                  <li class="flex items-start gap-2.5 bg-slate-50 p-2.5 rounded-xl border border-slate-200/60">
+                    <span class="material-symbols-outlined text-indigo-600 text-[18px] shrink-0 mt-0.5">add_moderator</span>
+                    <div class="flex flex-col">
+                      <span class="font-semibold text-slate-900">Todo lo incluido en el Plan Básico</span>
+                      <span class="text-slate-500">OFAC, ONU, SAT 69-B ilimitados, sellado SHA-256.</span>
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-2.5">
+                    <span class="material-symbols-outlined text-indigo-600 text-[18px] shrink-0 mt-0.5">account_balance</span>
+                    <div class="flex flex-col">
+                      <span class="font-semibold text-slate-900">Módulo PEP Completo (Personas Políticamente Expuestas)</span>
+                      <span class="text-slate-500">Padrón de servidores públicos federales, estatales y municipales.</span>
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-2.5">
+                    <span class="material-symbols-outlined text-indigo-600 text-[18px] shrink-0 mt-0.5">fact_check</span>
+                    <div class="flex flex-col">
+                      <span class="font-semibold text-slate-900">Listas de Contraloría Federal y Función Pública (SFP)</span>
+                      <span class="text-slate-500">Consulta de personas inhabilitadas o impeditivas para contratar.</span>
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-2.5">
+                    <span class="material-symbols-outlined text-indigo-600 text-[18px] shrink-0 mt-0.5">code_blocks</span>
+                    <div class="flex flex-col">
+                      <span class="font-semibold text-slate-900">Generación y exportación de Avisos UIF en XML oficial</span>
+                      <span class="text-slate-500">Estructura validada contra esquemas XSD del SPPLD / SAT.</span>
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-2.5">
+                    <span class="material-symbols-outlined text-indigo-600 text-[18px] shrink-0 mt-0.5">hub</span>
+                    <div class="flex flex-col">
+                      <span class="font-semibold text-slate-900">API REST para integración con Notalia / SIEN</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Action Area -->
+            <div class="pt-6 mt-6 border-t border-slate-100 flex flex-col gap-3">
+              <button class="w-full h-11 bg-slate-900 hover:bg-slate-850 text-white font-semibold text-xs rounded-xl flex items-center justify-center gap-2 shadow-sm transition-all" type="button">
+                <span class="material-symbols-outlined text-[18px]">lock_clock</span>
+                <span>Solicitar Acceso Temprano / Demostración</span>
+              </button>
+              <span class="text-[11px] text-center text-slate-400">Cupo preferente asignado por orden de pre-registro notarial.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detailed Compliance Comparison & Registry Guarantees -->
+        <div class="bg-white rounded-2xl border border-slate-200/70 shadow-card p-8">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6">
+            <div class="flex flex-col gap-1">
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Respaldo Regulatorio • México</span>
+              <h3 class="font-display text-xl text-slate-900 font-bold">Cuadro Comparativo de Cobertura Notarial</h3>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-slate-600 bg-slate-50 px-3.5 py-1.5 rounded-full border border-slate-200">
+              <span class="material-symbols-outlined text-[18px] text-indigo-600">history_edu</span>
+              <span>Conforme a criterios de la UIF y el SAT para Notarios</span>
+            </div>
+          </div>
+
+          <!-- Clean Tabular Comparison -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="bg-slate-50 text-slate-500 font-bold uppercase tracking-wider border-b border-slate-100">
+                  <th class="py-3.5 px-4 rounded-l-xl">Criterio de Auditoría / Lista</th>
+                  <th class="py-3.5 px-4">Obligatoriedad Legal</th>
+                  <th class="py-3.5 px-4 text-center">Plan Básico</th>
+                  <th class="py-3.5 px-4 text-center rounded-r-xl bg-indigo-50/60 text-indigo-900">Plan Pro (Fase 2)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 text-slate-700">
+                <tr class="hover:bg-slate-50/50 transition-colors">
+                  <td class="py-3.5 px-4 font-semibold text-slate-900">Lista de Personas Bloqueadas UIF • OFAC (EE.UU.)</td>
+                  <td class="py-3.5 px-4 text-slate-500">Obligatoria (Tratados internacionales)</td>
+                  <td class="py-3.5 px-4 text-center">
+                    <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-700">
+                      <span class="material-symbols-outlined text-[16px]">check</span>
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4 text-center bg-indigo-50/20">
+                    <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-700">
+                      <span class="material-symbols-outlined text-[16px]">check</span>
+                    </span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-slate-50/50 transition-colors">
+                  <td class="py-3.5 px-4 font-semibold text-slate-900">Resoluciones Consejo de Seguridad ONU (Terrorismo)</td>
+                  <td class="py-3.5 px-4 text-slate-500">Obligatoria (Vigilancia CSNU)</td>
+                  <td class="py-3.5 px-4 text-center">
+                    <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-700">
+                      <span class="material-symbols-outlined text-[16px]">check</span>
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4 text-center bg-indigo-50/20">
+                    <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-700">
+                      <span class="material-symbols-outlined text-[16px]">check</span>
+                    </span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-slate-50/50 transition-colors">
+                  <td class="py-3.5 px-4 font-semibold text-slate-900">SAT Artículo 69-B (EFOS Definitivos y Presuntos)</td>
+                  <td class="py-3.5 px-4 text-slate-500">Obligatoria (Código Fiscal de la Federación)</td>
+                  <td class="py-3.5 px-4 text-center">
+                    <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-700">
+                      <span class="material-symbols-outlined text-[16px]">check</span>
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4 text-center bg-indigo-50/20">
+                    <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-700">
+                      <span class="material-symbols-outlined text-[16px]">check</span>
+                    </span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-slate-50/50 transition-colors">
+                  <td class="py-3.5 px-4 font-semibold text-slate-900">Módulo PEP Nacional e Internacional (3 Niveles)</td>
+                  <td class="py-3.5 px-4 text-slate-500">Debida diligencia reforzada (LFPIORPI)</td>
+                  <td class="py-3.5 px-4 text-center text-slate-400 font-mono">—</td>
+                  <td class="py-3.5 px-4 text-center bg-indigo-50/20">
+                    <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-indigo-600 text-white">
+                      <span class="material-symbols-outlined text-[16px]">star</span>
+                    </span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-slate-50/50 transition-colors">
+                  <td class="py-3.5 px-4 font-semibold text-slate-900">Generador de Avisos XML Portal UIF / SAT</td>
+                  <td class="py-3.5 px-4 text-slate-500">Para reporte mensual de vulnerables (Día 17)</td>
+                  <td class="py-3.5 px-4 text-center text-slate-400 font-mono">—</td>
+                  <td class="py-3.5 px-4 text-center bg-indigo-50/20">
+                    <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-indigo-600 text-white">
+                      <span class="material-symbols-outlined text-[16px]">star</span>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Institutional FAQ Section -->
+        <div class="flex flex-col gap-5">
+          <div class="flex flex-col gap-1">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-indigo-600 text-[20px]">help</span>
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Certeza Jurídica y Técnica</span>
+            </div>
+            <h3 class="font-display text-xl text-slate-900 font-bold tracking-tight">Preguntas Frecuentes de Notarios y Titulares</h3>
+            <p class="text-xs text-slate-500">
+              Respuestas claras fundamentadas en la legislación notarial mexicana y auditorías de cumplimiento.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <!-- FAQ 1 -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-card flex flex-col justify-between">
+              <div class="flex flex-col gap-3">
+                <div class="w-9 h-9 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 border border-indigo-100">
+                  <span class="material-symbols-outlined text-[20px]">policy</span>
+                </div>
+                <h4 class="font-semibold text-xs text-slate-900 leading-snug">
+                  ¿Las constancias emitidas sirven como comprobante de debida diligencia ante inspecciones de la UIF?
+                </h4>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                  <strong class="text-slate-900 font-medium">Sí, plenamente.</strong> Cada consulta emite una constancia digital en PDF con <code class="font-mono text-[11px] text-indigo-600 bg-slate-100 px-1 py-0.5 rounded">hash SHA-256</code> y estampado de tiempo oficial.
+                </p>
+              </div>
+              <div class="pt-4 mt-4 border-t border-slate-100 flex items-center gap-1.5 text-slate-500 font-mono text-[11px]">
+                <span class="material-symbols-outlined text-[15px] text-emerald-600">verified</span>
+                <span>Validez probatoria documental</span>
+              </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-card flex flex-col justify-between">
+              <div class="flex flex-col gap-3">
+                <div class="w-9 h-9 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 border border-indigo-100">
+                  <span class="material-symbols-outlined text-[20px]">sync</span>
+                </div>
+                <h4 class="font-semibold text-xs text-slate-900 leading-snug">
+                  ¿Con qué frecuencia se sincronizan los listados oficiales?
+                </h4>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                  Las bases de <strong class="text-slate-900 font-medium">OFAC y ONU</strong> se sincronizan continuamente. El listado del <strong class="text-slate-900 font-medium">SAT 69-B</strong> se actualiza ante publicaciones extraordinarias o del DOF.
+                </p>
+              </div>
+              <div class="pt-4 mt-4 border-t border-slate-100 flex items-center gap-1.5 text-slate-500 font-mono text-[11px]">
+                <span class="material-symbols-outlined text-[15px] text-emerald-600">update</span>
+                <span>Indexación DOF y OFAC continua</span>
+              </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-card flex flex-col justify-between">
+              <div class="flex flex-col gap-3">
+                <div class="w-9 h-9 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 border border-indigo-100">
+                  <span class="material-symbols-outlined text-[20px]">shield_lock</span>
+                </div>
+                <h4 class="font-semibold text-xs text-slate-900 leading-snug">
+                  ¿Cómo se garantiza la confidencialidad de los nombres consultados?
+                </h4>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                  Implementamos <strong class="text-slate-900 font-medium">almacenamiento cifrado (TLS 1.3 y AES-256)</strong>. La notaría es la única titular y propietaria absoluta de su bitácora confidencial.
+                </p>
+              </div>
+              <div class="pt-4 mt-4 border-t border-slate-100 flex items-center gap-1.5 text-slate-500 font-mono text-[11px]">
+                <span class="material-symbols-outlined text-[15px] text-emerald-600">lock</span>
+                <span>Secreto notarial y LFPDPPP</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Colegio de Notarios Footer Banner -->
+        <div class="flex flex-col sm:flex-row items-center justify-between p-6 bg-white rounded-2xl border border-slate-200/70 shadow-card gap-4 text-slate-600">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-[20px]">handshake</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-xs font-bold text-slate-900">¿Representa a un Colegio Notarial o red de notarías asociadas?</span>
+              <span class="text-xs text-slate-500">Disponemos de convenios marco de licenciamiento colectivo y tarifas institucionales.</span>
+            </div>
+          </div>
+          <a class="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs rounded-xl transition-colors shrink-0" href="mailto:colegios@cotejo.mx">
+            <span class="material-symbols-outlined text-[18px]">mail</span>
+            <span>Contactar a Dirección Jurídica</span>
+          </a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</body>
+</html>
