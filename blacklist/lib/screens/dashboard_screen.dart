@@ -251,7 +251,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     Row(
                       children: [
                         Text(
-                          'Notaría Pública No. 142',
+                          'Notaría Pública No. 143',
                           style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF94A3B8)),
                         ),
                         const SizedBox(width: 6),
@@ -315,7 +315,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Lic. Fernando Morales',
+                              'Lic. Mauro García Martínez',
                               style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white),
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -488,9 +488,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           text: TextSpan(
             style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.w800, color: const Color(0xFF0F172A)),
             children: [
-              const TextSpan(text: 'Bienvenido, Lic. Morales '),
+              const TextSpan(text: 'Bienvenido, Lic. García '),
               TextSpan(
-                text: '• Notaría Pública No. 142 de la CDMX',
+                text: '• Notaría Pública No. 143 de la CDMX',
                 style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.normal, color: const Color(0xFF64748B)),
               ),
             ],

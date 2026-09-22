@@ -145,7 +145,7 @@ class _PlanesSuscripcionScreenState extends State<PlanesSuscripcionScreen> {
                     Row(
                       children: [
                         Text(
-                          'Notaría Pública No. 142',
+                          'Notaría Pública No. 143',
                           style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF94A3B8)),
                         ),
                         const SizedBox(width: 6),
@@ -205,7 +205,7 @@ class _PlanesSuscripcionScreenState extends State<PlanesSuscripcionScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Lic. Fernando Morales',
+                              'Lic. Mauro García Martínez',
                               style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white),
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -626,7 +626,7 @@ class _PlanesSuscripcionScreenState extends State<PlanesSuscripcionScreen> {
                     Text('Estado en su despacho:', style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFF0F172A))),
                   ],
                 ),
-                Text('NOTARÍA 142 CDMX • ACTIVO', style: GoogleFonts.jetBrainsMono(fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFF4F46E5))),
+                Text('NOTARÍA 143 CDMX • ACTIVO', style: GoogleFonts.jetBrainsMono(fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFF4F46E5))),
               ],
             ),
           ),

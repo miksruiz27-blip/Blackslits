@@ -207,7 +207,7 @@ class _BitacoraNotarialScreenState extends State<BitacoraNotarialScreen> {
                       ],
                     ),
                     const SizedBox(height: 12),
-                    Text('Notaría Pública No. 142 • CDMX', style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF94A3B8))),
+                    Text('Notaría Pública No. 143 • CDMX', style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF94A3B8))),
                   ],
                 ),
               ),
@@ -252,7 +252,7 @@ class _BitacoraNotarialScreenState extends State<BitacoraNotarialScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Lic. Fernando Morales', style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white), overflow: TextOverflow.ellipsis),
+                            Text('Lic. Mauro García Martínez', style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white), overflow: TextOverflow.ellipsis),
                             Text('Notario Titular', style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF34D399), fontWeight: FontWeight.w500)),
                           ],
                         ),
@@ -386,7 +386,7 @@ class _BitacoraNotarialScreenState extends State<BitacoraNotarialScreen> {
               ),
               const SizedBox(height: 4),
               Text(
-                'Registro inmutable de consultas preventivas realizadas por la Notaría Pública No. 142 de la CDMX.',
+                'Registro inmutable de consultas preventivas realizadas por la Notaría Pública No. 143 de la CDMX.',
                 style: GoogleFonts.inter(fontSize: 13, color: const Color(0xFF64748B)),
               ),
             ],
